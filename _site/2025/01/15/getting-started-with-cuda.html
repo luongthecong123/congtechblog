@@ -3,22 +3,22 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Getting Started with CUDA Programming | CUDA Programming Guide</title>
+<title>Getting Started with CUDA | CUDA Programming Guide</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Getting Started with CUDA Programming" />
+<meta property="og:title" content="Getting Started with CUDA" />
 <meta name="author" content="Your Name" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Getting Started with CUDA Programming" />
-<meta property="og:description" content="Getting Started with CUDA Programming" />
+<meta name="description" content="This is my first post about CUDA programming. More content coming soon!" />
+<meta property="og:description" content="This is my first post about CUDA programming. More content coming soon!" />
 <link rel="canonical" href="http://localhost:4000/2025/01/15/getting-started-with-cuda.html" />
 <meta property="og:url" content="http://localhost:4000/2025/01/15/getting-started-with-cuda.html" />
 <meta property="og:site_name" content="CUDA Programming Guide" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2025-01-15T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Getting Started with CUDA Programming" />
+<meta property="twitter:title" content="Getting Started with CUDA" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Your Name"},"dateModified":"2025-01-15T00:00:00+00:00","datePublished":"2025-01-15T00:00:00+00:00","description":"Getting Started with CUDA Programming","headline":"Getting Started with CUDA Programming","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2025/01/15/getting-started-with-cuda.html"},"url":"http://localhost:4000/2025/01/15/getting-started-with-cuda.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Your Name"},"dateModified":"2025-01-15T00:00:00+00:00","datePublished":"2025-01-15T00:00:00+00:00","description":"This is my first post about CUDA programming. More content coming soon!","headline":"Getting Started with CUDA","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2025/01/15/getting-started-with-cuda.html"},"url":"http://localhost:4000/2025/01/15/getting-started-with-cuda.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="CUDA Programming Guide" /></head>
 <body><header class="site-header" role="banner">
@@ -33,7 +33,7 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/">Welcome to the CUDA Programming Guide</a><a class="page-link" href="/resources/">Resources</a><a class="page-link" href="/tutorials/">Tutorials</a></div>
+        <div class="trigger"><a class="page-link" href="/">Welcome to Cong Tech Blog</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -41,140 +41,17 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Getting Started with CUDA Programming</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Getting Started with CUDA</h1>
     <p class="post-meta">
       <time class="dt-published" datetime="2025-01-15T00:00:00+00:00" itemprop="datePublished">Jan 15, 2025
-      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">Your Name</span></span>•<span class="tag">CUDA</span>,<span class="tag">GPU</span>,<span class="tag">Beginner</span>,<span class="tag">Setup</span></p>
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">Your Name</span></span></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <h1 id="getting-started-with-cuda-programming">Getting Started with CUDA Programming</h1>
+    <p>This is my first post about CUDA programming. More content coming soon!</p>
 
-<p>CUDA (Compute Unified Device Architecture) is NVIDIA’s parallel computing platform and application programming interface (API) that allows developers to harness the power of NVIDIA GPUs for general-purpose computing.</p>
-
-<h2 id="what-is-cuda">What is CUDA?</h2>
-
-<p>CUDA enables dramatic increases in computing performance by harnessing the power of the graphics processing unit (GPU). With millions of cores available in modern GPUs, CUDA allows you to accelerate compute-intensive applications.</p>
-
-<h2 id="prerequisites">Prerequisites</h2>
-
-<p>Before diving into CUDA programming, you’ll need:</p>
-
-<ul>
-  <li>An NVIDIA GPU with CUDA Compute Capability 3.0 or higher</li>
-  <li>CUDA Toolkit installed on your system</li>
-  <li>A compatible C/C++ compiler</li>
-  <li>Basic knowledge of C/C++ programming</li>
-</ul>
-
-<h2 id="your-first-cuda-program">Your First CUDA Program</h2>
-
-<p>Let’s start with a simple “Hello World” program:</p>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-</pre></td><td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-#include</span> <span class="cpf">&lt;cuda_runtime.h&gt;</span><span class="cp">
-</span>
-<span class="n">__global__</span> <span class="kt">void</span> <span class="nf">helloKernel</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">"Hello from GPU thread %d!</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// Launch kernel with 10 threads</span>
-    <span class="n">helloKernel</span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="o">&gt;&gt;&gt;</span><span class="p">();</span>
-    
-    <span class="c1">// Wait for GPU to finish</span>
-    <span class="n">cudaDeviceSynchronize</span><span class="p">();</span>
-    
-    <span class="n">printf</span><span class="p">(</span><span class="s">"Hello from CPU!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<h2 id="key-concepts">Key Concepts</h2>
-
-<h3 id="kernels">Kernels</h3>
-<p>A kernel is a function that runs on the GPU. It’s marked with the <code class="language-plaintext highlighter-rouge">__global__</code> keyword.</p>
-
-<h3 id="thread-hierarchy">Thread Hierarchy</h3>
-<p>CUDA organizes threads into:</p>
-<ul>
-  <li><strong>Threads</strong>: Individual execution units</li>
-  <li><strong>Blocks</strong>: Groups of threads</li>
-  <li><strong>Grids</strong>: Collections of blocks</li>
-</ul>
-
-<h3 id="memory-hierarchy">Memory Hierarchy</h3>
-<p>CUDA has several memory types:</p>
-<ul>
-  <li><strong>Global Memory</strong>: Accessible by all threads</li>
-  <li><strong>Shared Memory</strong>: Shared within a block</li>
-  <li><strong>Local Memory</strong>: Private to each thread</li>
-</ul>
-
-<h2 id="compilation">Compilation</h2>
-
-<p>To compile your CUDA program:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>nvcc <span class="nt">-o</span> hello hello.cu
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<h2 id="next-steps">Next Steps</h2>
-
-<p>In the next post, we’ll explore CUDA memory management and learn how to efficiently transfer data between CPU and GPU.</p>
-
-<hr />
-
-<p><em>This is the first post in our CUDA programming series. Stay tuned for more advanced topics!</em></p>
-
-  </div>
-
-  <div class="post-navigation"><a class="next-post" href="/2025/01/20/cuda-memory-management.html">CUDA Memory Management: A Deep Dive &rarr;</a></div><a class="u-url" href="/2025/01/15/getting-started-with-cuda.html" hidden></a>
+  </div><a class="u-url" href="/2025/01/15/getting-started-with-cuda.html" hidden></a>
 </article>
-
-<style>
-.post-navigation {
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e8e8e8;
-  display: flex;
-  justify-content: space-between;
-}
-
-.tag {
-  background-color: #f1f3f4;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 0.8rem;
-}
-
-.prev-post, .next-post {
-  color: #1976d2;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.prev-post:hover, .next-post:hover {
-  text-decoration: underline;
-}
-</style>
 
       </div>
     </main><footer class="site-footer h-card">
