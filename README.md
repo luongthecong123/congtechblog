@@ -13,8 +13,8 @@ A comprehensive Jekyll-based technical blog covering CUDA programming, GPU compu
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/cuda-programming-guide.git
-   cd cuda-programming-guide
+   git clone https://github.com/luongthecong123/congtechblog.git
+   cd congtechblog
    ```
 
 2. **Install dependencies**
@@ -49,7 +49,7 @@ A comprehensive Jekyll-based technical blog covering CUDA programming, GPU compu
 3. **Update site URL**
    Edit `_config.yml` and update the `url` field:
    ```yaml
-   url: "https://yourusername.github.io"
+   url: "https://luongthecong123.github.io"
    ```
 
 ## 📁 Project Structure

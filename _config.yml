@@ -3,8 +3,8 @@
 # Site settings
 title: "CUDA Programming Guide"
 description: "A comprehensive technical blog covering CUDA programming, GPU computing, and parallel programming techniques"
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://yourusername.github.io" # Replace with your GitHub Pages URL
+baseurl: "/congtechblog" # the subpath of your site, e.g. /blog
+url: "https://luongthecong123.github.io" # Replace with your GitHub Pages URL
 author: "Your Name"
 email: "your.email@example.com"
 
