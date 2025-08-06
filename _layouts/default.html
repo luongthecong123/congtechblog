@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Cong Tech Blog - Cong Tech Blog</title>
-    <meta name="description" content="A tech blog about CUDA programming">
-    <link rel="stylesheet" href="/congtechblog/assets/css/style.css">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
     <!-- Menu Toggle Button -->
@@ -24,23 +24,23 @@
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-content">
             <div class="sidebar-header">
-                <h2>Cong Tech Blog</h2>
+                <h2>{{ site.title }}</h2>
             </div>
             
             <div class="sidebar-section">
-                <a href="/congtechblog/" class="sidebar-link">Home</a>
-                <a href="/congtechblog/about/" class="sidebar-link">About</a>
+                <a href="{{ '/' | relative_url }}" class="sidebar-link">Home</a>
+                <a href="{{ '/about/' | relative_url }}" class="sidebar-link">About</a>
             </div>
 
             <div class="sidebar-section">
                 <h3>Recent Posts</h3>
                 <div class="posts-list">
-                    
-                    <a href="/congtechblog/cuda/aws/gpu-computing/cloud/2025/08/06/nvidia-gpus-aws-ec2-comprehensive-guide.html" class="post-link" title="NVIDIA GPUs in AWS EC2: Complete Technical Guide to Architecture, Performance & Specifications">
-                        <span class="post-title">NVIDIA GPUs in AWS EC2: Com...</span>
-                        <span class="post-date">Aug 06</span>
+                    {% for post in site.posts limit:10 %}
+                    <a href="{{ post.url | relative_url }}" class="post-link" title="{{ post.title }}">
+                        <span class="post-title">{{ post.title | truncate: 30 }}</span>
+                        <span class="post-date">{{ post.date | date: "%b %d" }}</span>
                     </a>
-                    
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -49,53 +49,7 @@
     <!-- Main Content -->
     <main class="main-content" id="mainContent">
         <div class="container">
-            <div class="home">
-    <header class="home-header">
-        <h1 class="home-title">Welcome to Cong Tech Blog</h1>
-        
-        <p class="home-description">A tech blog about CUDA programming</p>
-        
-    </header>
-
-    <div class="home-content">
-        <h1 id="welcome-to-cong-tech-blog">Welcome to Cong Tech Blog</h1>
-
-<p>This is a simple tech blog about CUDA programming and GPU computing.</p>
-
-<h2 id="recent-posts">Recent Posts</h2>
-
-<p>Check out my latest posts below!</p>
-
-    </div>
-
-    
-    <section class="posts-section">
-        <h2>Latest Posts</h2>
-        <div class="posts-grid">
-            
-            <article class="post-card">
-                <h3 class="post-card-title">
-                    <a href="/congtechblog/cuda/aws/gpu-computing/cloud/2025/08/06/nvidia-gpus-aws-ec2-comprehensive-guide.html">NVIDIA GPUs in AWS EC2: Complete Technical Guide to Architecture, Performance & Specifications</a>
-                </h3>
-                <div class="post-card-meta">
-                    <time datetime="2025-08-06T00:00:00+01:00">
-                        August 06, 2025
-                    </time>
-                </div>
-                
-                <div class="post-card-excerpt">
-                    NVIDIA GPUs in AWS EC2: Complete Technical Guide
-
-
-                </div>
-                
-            </article>
-            
-        </div>
-    </section>
-    
-</div>
-
+            {{ content }}
         </div>
     </main>
 

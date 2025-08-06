@@ -1,1 +1,721 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-08-06T16:31:06+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">CUDA Programming Guide</title><subtitle>A comprehensive technical blog covering CUDA programming, GPU computing, and parallel programming techniques</subtitle><author><name>Your Name</name></author><entry><title type="html">CUDA Memory Management</title><link href="http://localhost:4000/2025/01/20/cuda-memory-management.html" rel="alternate" type="text/html" title="CUDA Memory Management" /><published>2025-01-20T00:00:00+00:00</published><updated>2025-01-20T00:00:00+00:00</updated><id>http://localhost:4000/2025/01/20/cuda-memory-management</id><content type="html" xml:base="http://localhost:4000/2025/01/20/cuda-memory-management.html"><![CDATA[<p>This post will cover CUDA memory management basics. Coming soon!</p>]]></content><author><name>Your Name</name></author><summary type="html"><![CDATA[This post will cover CUDA memory management basics. Coming soon!]]></summary></entry><entry><title type="html">Getting Started with CUDA</title><link href="http://localhost:4000/2025/01/15/getting-started-with-cuda.html" rel="alternate" type="text/html" title="Getting Started with CUDA" /><published>2025-01-15T00:00:00+00:00</published><updated>2025-01-15T00:00:00+00:00</updated><id>http://localhost:4000/2025/01/15/getting-started-with-cuda</id><content type="html" xml:base="http://localhost:4000/2025/01/15/getting-started-with-cuda.html"><![CDATA[<p>This is my first post about CUDA programming. More content coming soon!</p>]]></content><author><name>Your Name</name></author><summary type="html"><![CDATA[This is my first post about CUDA programming. More content coming soon!]]></summary></entry></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/congtechblog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/congtechblog/" rel="alternate" type="text/html" /><updated>2025-08-06T17:38:50+01:00</updated><id>http://localhost:4000/congtechblog/feed.xml</id><title type="html">Cong Tech Blog</title><subtitle>A tech blog about CUDA programming</subtitle><entry><title type="html">NVIDIA GPUs in AWS EC2: Complete Technical Guide to Architecture, Performance &amp;amp; Specifications</title><link href="http://localhost:4000/congtechblog/cuda/aws/gpu-computing/cloud/2025/08/06/nvidia-gpus-aws-ec2-comprehensive-guide.html" rel="alternate" type="text/html" title="NVIDIA GPUs in AWS EC2: Complete Technical Guide to Architecture, Performance &amp;amp; Specifications" /><published>2025-08-06T00:00:00+01:00</published><updated>2025-08-06T00:00:00+01:00</updated><id>http://localhost:4000/congtechblog/cuda/aws/gpu-computing/cloud/2025/08/06/nvidia-gpus-aws-ec2-comprehensive-guide</id><content type="html" xml:base="http://localhost:4000/congtechblog/cuda/aws/gpu-computing/cloud/2025/08/06/nvidia-gpus-aws-ec2-comprehensive-guide.html"><![CDATA[<h1 id="nvidia-gpus-in-aws-ec2-complete-technical-guide">NVIDIA GPUs in AWS EC2: Complete Technical Guide</h1>
+
+<p>Amazon Web Services (AWS) Elastic Compute Cloud (EC2) offers a comprehensive range of GPU-accelerated instances powered by NVIDIA’s cutting-edge graphics processors. This technical guide provides an in-depth analysis of NVIDIA GPU architectures available in AWS EC2, their compute capabilities, memory specifications, and performance characteristics for CUDA programming and AI workloads.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+  <li><a href="#aws-ec2-gpu-instance-types-overview">AWS EC2 GPU Instance Types Overview</a></li>
+  <li><a href="#nvidia-gpu-architectures-in-aws">NVIDIA GPU Architectures in AWS</a></li>
+  <li><a href="#technical-specifications-comparison">Technical Specifications Comparison</a></li>
+  <li><a href="#compute-capability-analysis">Compute Capability Analysis</a></li>
+  <li><a href="#memory-bandwidth--performance">Memory Bandwidth &amp; Performance</a></li>
+  <li><a href="#tensor-core-performance">Tensor Core Performance</a></li>
+  <li><a href="#use-case-recommendations">Use Case Recommendations</a></li>
+  <li><a href="#programming-considerations">Programming Considerations</a></li>
+</ol>
+
+<h2 id="aws-ec2-gpu-instance-types-overview">AWS EC2 GPU Instance Types Overview</h2>
+
+<p>AWS offers several GPU instance families optimized for different workloads:</p>
+
+<h3 id="p-series-performance-optimized">P-Series (Performance-Optimized)</h3>
+<ul>
+  <li><strong>P4d</strong>: NVIDIA A100 GPUs (Latest generation)</li>
+  <li><strong>P3</strong>: NVIDIA V100 GPUs (Previous generation)</li>
+  <li><strong>P2</strong>: NVIDIA K80 GPUs (Legacy)</li>
+</ul>
+
+<h3 id="g-series-graphics-optimized">G-Series (Graphics-Optimized)</h3>
+<ul>
+  <li><strong>G5</strong>: NVIDIA A10G GPUs</li>
+  <li><strong>G4dn</strong>: NVIDIA T4 GPUs</li>
+  <li><strong>G4ad</strong>: AMD Radeon Pro V520 (Non-NVIDIA)</li>
+  <li><strong>G3</strong>: NVIDIA M60 GPUs (Legacy)</li>
+</ul>
+
+<h3 id="specialty-instances">Specialty Instances</h3>
+<ul>
+  <li><strong>Trn1</strong>: AWS Trainium (Custom silicon)</li>
+  <li><strong>Inf1</strong>: AWS Inferentia (Custom silicon)</li>
+</ul>
+
+<h2 id="nvidia-gpu-architectures-in-aws">NVIDIA GPU Architectures in AWS</h2>
+
+<h3 id="current-generation-nvidia-gpus">Current Generation NVIDIA GPUs</h3>
+
+<h4 id="nvidia-a100-ampere-architecture">NVIDIA A100 (Ampere Architecture)</h4>
+<ul>
+  <li><strong>EC2 Instance</strong>: P4d.24xlarge, P4de.24xlarge</li>
+  <li><strong>Compute Capability</strong>: 8.0</li>
+  <li><strong>Architecture</strong>: Ampere (GA100)</li>
+  <li><strong>Memory</strong>: 40GB/80GB HBM2e</li>
+  <li><strong>Memory Bandwidth</strong>: 1,555 GB/s (40GB) / 2,039 GB/s (80GB)</li>
+  <li><strong>CUDA Cores</strong>: 6,912</li>
+  <li><strong>Tensor Cores</strong>: 432 (3rd Gen)</li>
+  <li><strong>FP16 Performance</strong>: 312 TFLOPS (with sparsity)</li>
+  <li><strong>FP32 Performance</strong>: 19.5 TFLOPS</li>
+  <li><strong>NVLink</strong>: 600 GB/s (bidirectional)</li>
+</ul>
+
+<h4 id="nvidia-a10g-ampere-architecture">NVIDIA A10G (Ampere Architecture)</h4>
+<ul>
+  <li><strong>EC2 Instance</strong>: G5.xlarge to G5.48xlarge</li>
+  <li><strong>Compute Capability</strong>: 8.6</li>
+  <li><strong>Architecture</strong>: Ampere (GA102)</li>
+  <li><strong>Memory</strong>: 24GB GDDR6</li>
+  <li><strong>Memory Bandwidth</strong>: 600 GB/s</li>
+  <li><strong>CUDA Cores</strong>: 9,216</li>
+  <li><strong>RT Cores</strong>: 72 (2nd Gen)</li>
+  <li><strong>Tensor Cores</strong>: 288 (3rd Gen)</li>
+  <li><strong>FP16 Performance</strong>: 125 TFLOPS</li>
+  <li><strong>FP32 Performance</strong>: 31.2 TFLOPS</li>
+</ul>
+
+<h4 id="nvidia-t4-turing-architecture">NVIDIA T4 (Turing Architecture)</h4>
+<ul>
+  <li><strong>EC2 Instance</strong>: G4dn.xlarge to G4dn.24xlarge</li>
+  <li><strong>Compute Capability</strong>: 7.5</li>
+  <li><strong>Architecture</strong>: Turing (TU104)</li>
+  <li><strong>Memory</strong>: 16GB GDDR6</li>
+  <li><strong>Memory Bandwidth</strong>: 300 GB/s</li>
+  <li><strong>CUDA Cores</strong>: 2,560</li>
+  <li><strong>RT Cores</strong>: 40 (1st Gen)</li>
+  <li><strong>Tensor Cores</strong>: 320 (2nd Gen)</li>
+  <li><strong>FP16 Performance</strong>: 65 TFLOPS</li>
+  <li><strong>FP32 Performance</strong>: 8.1 TFLOPS</li>
+</ul>
+
+<h3 id="previous-generation-nvidia-gpus">Previous Generation NVIDIA GPUs</h3>
+
+<h4 id="nvidia-v100-volta-architecture">NVIDIA V100 (Volta Architecture)</h4>
+<ul>
+  <li><strong>EC2 Instance</strong>: P3.2xlarge to P3dn.24xlarge</li>
+  <li><strong>Compute Capability</strong>: 7.0</li>
+  <li><strong>Architecture</strong>: Volta (GV100)</li>
+  <li><strong>Memory</strong>: 16GB/32GB HBM2</li>
+  <li><strong>Memory Bandwidth</strong>: 900 GB/s</li>
+  <li><strong>CUDA Cores</strong>: 5,120</li>
+  <li><strong>Tensor Cores</strong>: 640 (1st Gen)</li>
+  <li><strong>FP16 Performance</strong>: 125 TFLOPS</li>
+  <li><strong>FP32 Performance</strong>: 15.7 TFLOPS</li>
+  <li><strong>NVLink</strong>: 300 GB/s (bidirectional)</li>
+</ul>
+
+<h4 id="nvidia-k80-kepler-architecture">NVIDIA K80 (Kepler Architecture)</h4>
+<ul>
+  <li><strong>EC2 Instance</strong>: P2.xlarge to P2.16xlarge (Legacy)</li>
+  <li><strong>Compute Capability</strong>: 3.7</li>
+  <li><strong>Architecture</strong>: Kepler (GK210)</li>
+  <li><strong>Memory</strong>: 24GB GDDR5 (12GB per GPU)</li>
+  <li><strong>Memory Bandwidth</strong>: 480 GB/s (240 GB/s per GPU)</li>
+  <li><strong>CUDA Cores</strong>: 4,992 (2,496 per GPU)</li>
+  <li><strong>FP32 Performance</strong>: 8.73 TFLOPS</li>
+</ul>
+
+<h2 id="technical-specifications-comparison">Technical Specifications Comparison</h2>
+
+<h3 id="architecture-feature-matrix">Architecture Feature Matrix</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>GPU Model</th>
+      <th>Architecture</th>
+      <th>Compute Cap.</th>
+      <th>Memory Type</th>
+      <th>Memory Size</th>
+      <th>Memory BW</th>
+      <th>CUDA Cores</th>
+      <th>Tensor Cores</th>
+      <th>RT Cores</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A100 (80GB)</td>
+      <td>Ampere (GA100)</td>
+      <td>8.0</td>
+      <td>HBM2e</td>
+      <td>80GB</td>
+      <td>2,039 GB/s</td>
+      <td>6,912</td>
+      <td>432 (3rd Gen)</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>A100 (40GB)</td>
+      <td>Ampere (GA100)</td>
+      <td>8.0</td>
+      <td>HBM2e</td>
+      <td>40GB</td>
+      <td>1,555 GB/s</td>
+      <td>6,912</td>
+      <td>432 (3rd Gen)</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>A10G</td>
+      <td>Ampere (GA102)</td>
+      <td>8.6</td>
+      <td>GDDR6</td>
+      <td>24GB</td>
+      <td>600 GB/s</td>
+      <td>9,216</td>
+      <td>288 (3rd Gen)</td>
+      <td>72 (2nd Gen)</td>
+    </tr>
+    <tr>
+      <td>T4</td>
+      <td>Turing (TU104)</td>
+      <td>7.5</td>
+      <td>GDDR6</td>
+      <td>16GB</td>
+      <td>300 GB/s</td>
+      <td>2,560</td>
+      <td>320 (2nd Gen)</td>
+      <td>40 (1st Gen)</td>
+    </tr>
+    <tr>
+      <td>V100 (32GB)</td>
+      <td>Volta (GV100)</td>
+      <td>7.0</td>
+      <td>HBM2</td>
+      <td>32GB</td>
+      <td>900 GB/s</td>
+      <td>5,120</td>
+      <td>640 (1st Gen)</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>V100 (16GB)</td>
+      <td>Volta (GV100)</td>
+      <td>7.0</td>
+      <td>HBM2</td>
+      <td>16GB</td>
+      <td>900 GB/s</td>
+      <td>5,120</td>
+      <td>640 (1st Gen)</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>K80</td>
+      <td>Kepler (GK210)</td>
+      <td>3.7</td>
+      <td>GDDR5</td>
+      <td>24GB</td>
+      <td>480 GB/s</td>
+      <td>4,992</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="performance-specifications">Performance Specifications</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>GPU Model</th>
+      <th>FP32 TFLOPS</th>
+      <th>FP16 TFLOPS</th>
+      <th>TF32 TFLOPS</th>
+      <th>INT8 TOPS</th>
+      <th>BF16 TFLOPS</th>
+      <th>FP8 TFLOPS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A100 (80GB)</td>
+      <td>19.5</td>
+      <td>312*</td>
+      <td>156*</td>
+      <td>624*</td>
+      <td>312*</td>
+      <td>624*</td>
+    </tr>
+    <tr>
+      <td>A100 (40GB)</td>
+      <td>19.5</td>
+      <td>312*</td>
+      <td>156*</td>
+      <td>624*</td>
+      <td>312*</td>
+      <td>624*</td>
+    </tr>
+    <tr>
+      <td>A10G</td>
+      <td>31.2</td>
+      <td>125</td>
+      <td>62.5</td>
+      <td>250</td>
+      <td>125</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>T4</td>
+      <td>8.1</td>
+      <td>65</td>
+      <td>-</td>
+      <td>130</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>V100 (32GB)</td>
+      <td>15.7</td>
+      <td>125</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>V100 (16GB)</td>
+      <td>15.7</td>
+      <td>125</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>K80</td>
+      <td>8.73</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>*With sparsity optimization</p>
+
+<h2 id="compute-capability-analysis">Compute Capability Analysis</h2>
+
+<h3 id="cuda-compute-capability-evolution">CUDA Compute Capability Evolution</h3>
+
+<p>The compute capability version indicates the GPU’s feature set and CUDA programming capabilities:</p>
+
+<h4 id="compute-capability-8x-ampere">Compute Capability 8.x (Ampere)</h4>
+<ul>
+  <li><strong>Features</strong>:
+    <ul>
+      <li>3rd generation Tensor Cores with support for TF32, BF16, FP16, INT8, INT4, and binary</li>
+      <li>Hardware-accelerated asynchronous memory copy</li>
+      <li>L2 cache residency management</li>
+      <li>MIG (Multi-Instance GPU) support on A100</li>
+      <li>Structural sparsity support (2:4 sparsity pattern)</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="compute-capability-7x-voltaturing">Compute Capability 7.x (Volta/Turing)</h4>
+<ul>
+  <li><strong>Features</strong>:
+    <ul>
+      <li>Tensor Cores (1st/2nd generation)</li>
+      <li>Warp-level matrix operations</li>
+      <li>Independent thread scheduling</li>
+      <li>Unified memory with on-demand migration</li>
+      <li>Cooperative groups</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="compute-capability-3x-kepler">Compute Capability 3.x (Kepler)</h4>
+<ul>
+  <li><strong>Features</strong>:
+    <ul>
+      <li>Dynamic parallelism</li>
+      <li>Unified memory programming model</li>
+      <li>Read-only data cache</li>
+      <li>Shuffle instructions</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="programming-model-differences">Programming Model Differences</h3>
+
+<div class="language-cuda highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Example: Tensor Core usage across generations</span>
+
+<span class="c1">// Volta/Turing (CC 7.x) - WMMA API</span>
+<span class="cp">#include</span> <span class="cpf">&lt;mma.h&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">nvcuda</span><span class="p">;</span>
+
+<span class="n">wmma</span><span class="o">::</span><span class="n">fragment</span><span class="o">&lt;</span><span class="n">wmma</span><span class="o">::</span><span class="n">matrix_a</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">half</span><span class="p">,</span> <span class="n">wmma</span><span class="o">::</span><span class="n">row_major</span><span class="o">&gt;</span> <span class="n">a_frag</span><span class="p">;</span>
+<span class="n">wmma</span><span class="o">::</span><span class="n">fragment</span><span class="o">&lt;</span><span class="n">wmma</span><span class="o">::</span><span class="n">matrix_b</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">half</span><span class="p">,</span> <span class="n">wmma</span><span class="o">::</span><span class="n">col_major</span><span class="o">&gt;</span> <span class="n">b_frag</span><span class="p">;</span>
+<span class="n">wmma</span><span class="o">::</span><span class="n">fragment</span><span class="o">&lt;</span><span class="n">wmma</span><span class="o">::</span><span class="n">accumulator</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="kt">float</span><span class="o">&gt;</span> <span class="n">acc_frag</span><span class="p">;</span>
+
+<span class="n">wmma</span><span class="o">::</span><span class="n">load_matrix_sync</span><span class="p">(</span><span class="n">a_frag</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+<span class="n">wmma</span><span class="o">::</span><span class="n">load_matrix_sync</span><span class="p">(</span><span class="n">b_frag</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+<span class="n">wmma</span><span class="o">::</span><span class="n">mma_sync</span><span class="p">(</span><span class="n">acc_frag</span><span class="p">,</span> <span class="n">a_frag</span><span class="p">,</span> <span class="n">b_frag</span><span class="p">,</span> <span class="n">acc_frag</span><span class="p">);</span>
+
+<span class="c1">// Ampere (CC 8.x) - Enhanced with TF32 and sparsity</span>
+<span class="c1">// Automatic TF32 usage for FP32 operations on Tensor Cores</span>
+<span class="c1">// 2:4 structured sparsity support</span>
+</code></pre></div></div>
+
+<h2 id="memory-bandwidth--performance">Memory Bandwidth &amp; Performance</h2>
+
+<h3 id="memory-architecture-comparison">Memory Architecture Comparison</h3>
+
+<h4 id="hbm2e-a100">HBM2e (A100)</h4>
+<ul>
+  <li><strong>Technology</strong>: High Bandwidth Memory 2e</li>
+  <li><strong>Bus Width</strong>: 5120-bit (80GB) / 4096-bit (40GB)</li>
+  <li><strong>Clock Speed</strong>: ~1.6 GHz effective</li>
+  <li><strong>Latency</strong>: Lower latency compared to GDDR6</li>
+  <li><strong>Power Efficiency</strong>: Higher performance per watt</li>
+</ul>
+
+<h4 id="gddr6-a10g-t4">GDDR6 (A10G, T4)</h4>
+<ul>
+  <li><strong>Technology</strong>: Graphics Double Data Rate 6</li>
+  <li><strong>Bus Width</strong>: 384-bit (A10G), 256-bit (T4)</li>
+  <li><strong>Clock Speed</strong>: ~14-16 Gbps</li>
+  <li><strong>Cost</strong>: More cost-effective than HBM</li>
+  <li><strong>Availability</strong>: Broader market availability</li>
+</ul>
+
+<h4 id="hbm2-v100">HBM2 (V100)</h4>
+<ul>
+  <li><strong>Technology</strong>: High Bandwidth Memory 2</li>
+  <li><strong>Bus Width</strong>: 4096-bit</li>
+  <li><strong>Clock Speed</strong>: ~1.75 GHz effective</li>
+  <li><strong>Legacy</strong>: Previous generation HBM technology</li>
+</ul>
+
+<h3 id="memory-bandwidth-impact-on-performance">Memory Bandwidth Impact on Performance</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Memory bandwidth utilization example
+</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">def</span> <span class="nf">calculate_memory_efficiency</span><span class="p">(</span><span class="n">operations</span><span class="p">,</span> <span class="n">data_size</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">):</span>
+    <span class="s">"""
+    Calculate memory bandwidth efficiency
+    
+    Args:
+        operations: Number of operations performed
+        data_size: Size of data in bytes
+        time: Execution time in seconds
+        bandwidth: Theoretical peak bandwidth in GB/s
+    """</span>
+    <span class="n">achieved_bandwidth</span> <span class="o">=</span> <span class="n">data_size</span> <span class="o">/</span> <span class="p">(</span><span class="n">time</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">)</span>  <span class="c1"># GB/s
+</span>    <span class="n">efficiency</span> <span class="o">=</span> <span class="n">achieved_bandwidth</span> <span class="o">/</span> <span class="n">bandwidth</span> <span class="o">*</span> <span class="mi">100</span>
+    
+    <span class="k">return</span> <span class="n">achieved_bandwidth</span><span class="p">,</span> <span class="n">efficiency</span>
+
+<span class="c1"># Example for A100 80GB
+</span><span class="n">a100_bandwidth</span> <span class="o">=</span> <span class="mi">2039</span>  <span class="c1"># GB/s
+</span><span class="n">matrix_size</span> <span class="o">=</span> <span class="mi">8192</span>
+<span class="n">data_size</span> <span class="o">=</span> <span class="n">matrix_size</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">3</span>  <span class="c1"># 3 matrices, 4 bytes per float32
+</span><span class="n">execution_time</span> <span class="o">=</span> <span class="mf">0.001</span>  <span class="c1"># 1ms
+</span>
+<span class="n">achieved</span><span class="p">,</span> <span class="n">efficiency</span> <span class="o">=</span> <span class="n">calculate_memory_efficiency</span><span class="p">(</span>
+    <span class="n">matrix_size</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">data_size</span><span class="p">,</span> <span class="n">execution_time</span><span class="p">,</span> <span class="n">a100_bandwidth</span>
+<span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Achieved Bandwidth: </span><span class="si">{</span><span class="n">achieved</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s"> GB/s"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Memory Efficiency: </span><span class="si">{</span><span class="n">efficiency</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">%"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="tensor-core-performance">Tensor Core Performance</h2>
+
+<h3 id="tensor-core-generations">Tensor Core Generations</h3>
+
+<h4 id="3rd-generation-tensor-cores-ampere---a100-a10g">3rd Generation Tensor Cores (Ampere - A100, A10G)</h4>
+<ul>
+  <li><strong>Supported Formats</strong>: FP64, TF32, BF16, FP16, INT8, INT4, Binary</li>
+  <li><strong>Matrix Sizes</strong>: Flexible shapes (8x8 to 256x256)</li>
+  <li><strong>Sparsity</strong>: 2:4 structured sparsity support</li>
+  <li><strong>Performance</strong>: Up to 624 TOPS (INT4 with sparsity)</li>
+</ul>
+
+<h4 id="2nd-generation-tensor-cores-turing---t4">2nd Generation Tensor Cores (Turing - T4)</h4>
+<ul>
+  <li><strong>Supported Formats</strong>: FP16, INT8, INT4, Binary</li>
+  <li><strong>Matrix Sizes</strong>: 8x8, 16x16, 32x32</li>
+  <li><strong>Performance</strong>: Up to 130 TOPS (INT8)</li>
+</ul>
+
+<h4 id="1st-generation-tensor-cores-volta---v100">1st Generation Tensor Cores (Volta - V100)</h4>
+<ul>
+  <li><strong>Supported Formats</strong>: FP16 only</li>
+  <li><strong>Matrix Sizes</strong>: 16x16, 32x32</li>
+  <li><strong>Performance</strong>: Up to 125 TFLOPS (FP16)</li>
+</ul>
+
+<h3 id="fp16-and-fp8-performance-analysis">FP16 and FP8 Performance Analysis</h3>
+
+<div class="language-cuda highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Example: Mixed precision training optimization</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;cuda_fp16.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cuda_bf16.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// FP16 matrix multiplication using Tensor Cores</span>
+<span class="k">__global__</span> <span class="kt">void</span> <span class="nf">tensor_core_gemm_fp16</span><span class="p">(</span>
+    <span class="k">const</span> <span class="n">half</span><span class="o">*</span> <span class="n">A</span><span class="p">,</span> <span class="k">const</span> <span class="n">half</span><span class="o">*</span> <span class="n">B</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">M</span><span class="p">,</span> <span class="kt">int</span> <span class="n">N</span><span class="p">,</span> <span class="kt">int</span> <span class="n">K</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Use WMMA API for Tensor Core acceleration</span>
+    <span class="k">using</span> <span class="k">namespace</span> <span class="n">nvcuda</span><span class="p">;</span>
+    
+    <span class="n">wmma</span><span class="o">::</span><span class="n">fragment</span><span class="o">&lt;</span><span class="n">wmma</span><span class="o">::</span><span class="n">matrix_a</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">half</span><span class="p">,</span> <span class="n">wmma</span><span class="o">::</span><span class="n">row_major</span><span class="o">&gt;</span> <span class="n">a_frag</span><span class="p">;</span>
+    <span class="n">wmma</span><span class="o">::</span><span class="n">fragment</span><span class="o">&lt;</span><span class="n">wmma</span><span class="o">::</span><span class="n">matrix_b</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">half</span><span class="p">,</span> <span class="n">wmma</span><span class="o">::</span><span class="n">col_major</span><span class="o">&gt;</span> <span class="n">b_frag</span><span class="p">;</span>
+    <span class="n">wmma</span><span class="o">::</span><span class="n">fragment</span><span class="o">&lt;</span><span class="n">wmma</span><span class="o">::</span><span class="n">accumulator</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="kt">float</span><span class="o">&gt;</span> <span class="n">acc_frag</span><span class="p">;</span>
+    
+    <span class="c1">// Load, compute, and store using Tensor Cores</span>
+    <span class="n">wmma</span><span class="o">::</span><span class="n">load_matrix_sync</span><span class="p">(</span><span class="n">a_frag</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">K</span><span class="p">);</span>
+    <span class="n">wmma</span><span class="o">::</span><span class="n">load_matrix_sync</span><span class="p">(</span><span class="n">b_frag</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+    <span class="n">wmma</span><span class="o">::</span><span class="n">fill_fragment</span><span class="p">(</span><span class="n">acc_frag</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">);</span>
+    <span class="n">wmma</span><span class="o">::</span><span class="n">mma_sync</span><span class="p">(</span><span class="n">acc_frag</span><span class="p">,</span> <span class="n">a_frag</span><span class="p">,</span> <span class="n">b_frag</span><span class="p">,</span> <span class="n">acc_frag</span><span class="p">);</span>
+    <span class="n">wmma</span><span class="o">::</span><span class="n">store_matrix_sync</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">acc_frag</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">wmma</span><span class="o">::</span><span class="n">mem_row_major</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// BF16 support on Ampere (TF32 automatic promotion)</span>
+<span class="k">__global__</span> <span class="kt">void</span> <span class="n">tensor_core_gemm_bf16</span><span class="p">(</span>
+    <span class="k">const</span> <span class="n">__nv_bfloat16</span><span class="o">*</span> <span class="n">A</span><span class="p">,</span> <span class="k">const</span> <span class="n">__nv_bfloat16</span><span class="o">*</span> <span class="n">B</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">M</span><span class="p">,</span> <span class="kt">int</span> <span class="n">N</span><span class="p">,</span> <span class="kt">int</span> <span class="n">K</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Ampere automatically uses Tensor Cores for BF16</span>
+    <span class="c1">// with optional TF32 mode for higher precision</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="fp8-performance-a100-with-software-support">FP8 Performance (A100 with software support)</h3>
+
+<p>While A100 hardware doesn’t natively support FP8, software emulation and future architectures enable FP8 computation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># FP8 emulation performance estimate
+</span><span class="k">def</span> <span class="nf">fp8_performance_estimate</span><span class="p">(</span><span class="n">gpu_model</span><span class="p">,</span> <span class="n">base_fp16_tops</span><span class="p">):</span>
+    <span class="s">"""
+    Estimate FP8 performance based on FP16 capabilities
+    """</span>
+    <span class="k">if</span> <span class="n">gpu_model</span> <span class="o">==</span> <span class="s">"A100"</span><span class="p">:</span>
+        <span class="c1"># Theoretical 2x improvement over FP16
+</span>        <span class="n">fp8_tops</span> <span class="o">=</span> <span class="n">base_fp16_tops</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">fp8_tops</span>
+    <span class="k">elif</span> <span class="n">gpu_model</span> <span class="o">==</span> <span class="s">"H100"</span><span class="p">:</span>
+        <span class="c1"># Native FP8 support with better efficiency
+</span>        <span class="n">fp8_tops</span> <span class="o">=</span> <span class="n">base_fp16_tops</span> <span class="o">*</span> <span class="mi">4</span>
+        <span class="k">return</span> <span class="n">fp8_tops</span>
+    
+    <span class="k">return</span> <span class="n">base_fp16_tops</span>
+
+<span class="c1"># Example calculation
+</span><span class="n">a100_fp16_tops</span> <span class="o">=</span> <span class="mi">312</span>  <span class="c1"># With sparsity
+</span><span class="n">estimated_fp8_tops</span> <span class="o">=</span> <span class="n">fp8_performance_estimate</span><span class="p">(</span><span class="s">"A100"</span><span class="p">,</span> <span class="n">a100_fp16_tops</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"A100 Estimated FP8 TOPS: </span><span class="si">{</span><span class="n">estimated_fp8_tops</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="use-case-recommendations">Use Case Recommendations</h2>
+
+<h3 id="machine-learning-training">Machine Learning Training</h3>
+<ul>
+  <li><strong>Recommended</strong>: P4d (A100) for large-scale training</li>
+  <li><strong>Alternative</strong>: P3 (V100) for smaller models</li>
+  <li><strong>Budget Option</strong>: G4dn (T4) for prototype development</li>
+</ul>
+
+<h3 id="inference-workloads">Inference Workloads</h3>
+<ul>
+  <li><strong>High Throughput</strong>: G5 (A10G) with RT Cores for mixed workloads</li>
+  <li><strong>Cost-Effective</strong>: G4dn (T4) for standard inference</li>
+  <li><strong>Ultra-Low Latency</strong>: P4d (A100) with MIG for multi-tenant inference</li>
+</ul>
+
+<h3 id="scientific-computing">Scientific Computing</h3>
+<ul>
+  <li><strong>HPC Applications</strong>: P4d (A100) with NVLink for multi-GPU scaling</li>
+  <li><strong>Memory-Intensive</strong>: P3dn (V100) with local NVMe storage</li>
+  <li><strong>Legacy Workloads</strong>: P2 (K80) for basic CUDA acceleration</li>
+</ul>
+
+<h3 id="graphics-and-rendering">Graphics and Rendering</h3>
+<ul>
+  <li><strong>Ray Tracing</strong>: G5 (A10G) with 2nd Gen RT Cores</li>
+  <li><strong>Traditional Rendering</strong>: G4dn (T4) with 1st Gen RT Cores</li>
+  <li><strong>Mixed Workloads</strong>: G5 instances for compute + graphics</li>
+</ul>
+
+<h2 id="programming-considerations">Programming Considerations</h2>
+
+<h3 id="optimization-strategies-by-architecture">Optimization Strategies by Architecture</h3>
+
+<h4 id="ampere-a100-a10g">Ampere (A100, A10G)</h4>
+<div class="language-cuda highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Leverage structured sparsity</span>
+<span class="cp">#include</span> <span class="cpf">&lt;cusparse.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// Enable TF32 mode (default on Ampere)</span>
+<span class="n">cublasMath_t</span> <span class="n">math_mode</span> <span class="o">=</span> <span class="n">CUBLAS_TF32_TENSOR_OP_MATH</span><span class="p">;</span>
+<span class="n">cublasSetMathMode</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">math_mode</span><span class="p">);</span>
+
+<span class="c1">// Use asynchronous memory operations</span>
+<span class="n">cudaMemcpyAsync</span><span class="p">(</span><span class="n">d_data</span><span class="p">,</span> <span class="n">h_data</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">,</span> <span class="n">stream</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="voltaturing-v100-t4">Volta/Turing (V100, T4)</h4>
+<div class="language-cuda highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Optimize for Tensor Core usage</span>
+<span class="c1">// Ensure matrix dimensions are multiples of 16</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>  <span class="c1">// Good for Tensor Cores</span>
+
+<span class="c1">// Use mixed precision training</span>
+<span class="cp">#include</span> <span class="cpf">&lt;cuda_fp16.h&gt;</span><span class="cp">
+</span><span class="n">half</span><span class="o">*</span> <span class="n">fp16_weights</span><span class="p">;</span>
+<span class="kt">float</span><span class="o">*</span> <span class="n">fp32_gradients</span><span class="p">;</span>  <span class="c1">// Keep gradients in FP32 for accuracy</span>
+</code></pre></div></div>
+
+<h4 id="kepler-k80">Kepler (K80)</h4>
+<div class="language-cuda highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Focus on memory coalescing and occupancy</span>
+<span class="c1">// Use dynamic parallelism sparingly</span>
+<span class="k">__global__</span> <span class="kt">void</span> <span class="nf">parent_kernel</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Limited dynamic parallelism support</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">child_kernel</span><span class="o">&lt;&lt;&lt;</span><span class="n">blocks</span><span class="p">,</span> <span class="n">threads</span><span class="o">&gt;&gt;&gt;</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="memory-optimization-patterns">Memory Optimization Patterns</h3>
+
+<div class="language-cuda highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Memory access pattern optimization</span>
+<span class="k">__global__</span> <span class="kt">void</span> <span class="nf">optimized_kernel</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">height</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">idy</span> <span class="o">=</span> <span class="n">blockIdx</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="n">width</span> <span class="o">&amp;&amp;</span> <span class="n">idy</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Coalesced memory access</span>
+        <span class="kt">int</span> <span class="n">global_idx</span> <span class="o">=</span> <span class="n">idy</span> <span class="o">*</span> <span class="n">width</span> <span class="o">+</span> <span class="n">idx</span><span class="p">;</span>
+        
+        <span class="c1">// Use shared memory for data reuse</span>
+        <span class="k">__shared__</span> <span class="kt">float</span> <span class="n">shared_data</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+        <span class="n">shared_data</span><span class="p">[</span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">global_idx</span><span class="p">];</span>
+        <span class="n">__syncthreads</span><span class="p">();</span>
+        
+        <span class="c1">// Process using shared memory</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">global_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">process_data</span><span class="p">(</span><span class="n">shared_data</span><span class="p">[</span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="performance-benchmarking">Performance Benchmarking</h2>
+
+<h3 id="comparative-performance-analysis">Comparative Performance Analysis</h3>
+
+<p>The following table shows typical performance characteristics for common workloads:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Workload Type</th>
+      <th>A100 (80GB)</th>
+      <th>A10G</th>
+      <th>T4</th>
+      <th>V100 (32GB)</th>
+      <th>Relative Performance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ResNet-50 Training (imgs/sec)</td>
+      <td>2,200</td>
+      <td>850</td>
+      <td>420</td>
+      <td>1,100</td>
+      <td>A100: 5.2x T4</td>
+    </tr>
+    <tr>
+      <td>BERT-Large Inference (seq/sec)</td>
+      <td>8,500</td>
+      <td>3,200</td>
+      <td>1,400</td>
+      <td>4,800</td>
+      <td>A100: 6.1x T4</td>
+    </tr>
+    <tr>
+      <td>GPT-3 Fine-tuning (tokens/sec)</td>
+      <td>45,000</td>
+      <td>15,000</td>
+      <td>6,000</td>
+      <td>28,000</td>
+      <td>A100: 7.5x T4</td>
+    </tr>
+    <tr>
+      <td>Molecular Dynamics (ns/day)</td>
+      <td>180</td>
+      <td>65</td>
+      <td>32</td>
+      <td>95</td>
+      <td>A100: 5.6x T4</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="cost-performance-analysis">Cost-Performance Analysis</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Cost-performance calculation
+</span><span class="k">def</span> <span class="nf">calculate_cost_performance</span><span class="p">(</span><span class="n">instance_type</span><span class="p">,</span> <span class="n">hourly_cost</span><span class="p">,</span> <span class="n">performance_metric</span><span class="p">):</span>
+    <span class="s">"""
+    Calculate cost per performance unit
+    
+    Args:
+        instance_type: AWS instance type
+        hourly_cost: Cost per hour in USD
+        performance_metric: Performance value (TFLOPS, images/sec, etc.)
+    """</span>
+    <span class="n">cost_per_performance</span> <span class="o">=</span> <span class="n">hourly_cost</span> <span class="o">/</span> <span class="n">performance_metric</span>
+    <span class="k">return</span> <span class="n">cost_per_performance</span>
+
+<span class="c1"># Example calculations (approximate AWS pricing)
+</span><span class="n">instances</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'p4d.24xlarge'</span><span class="p">:</span> <span class="p">{</span><span class="s">'cost'</span><span class="p">:</span> <span class="mf">32.77</span><span class="p">,</span> <span class="s">'performance'</span><span class="p">:</span> <span class="mi">2200</span><span class="p">},</span>  <span class="c1"># A100, ResNet-50
+</span>    <span class="s">'g5.24xlarge'</span><span class="p">:</span> <span class="p">{</span><span class="s">'cost'</span><span class="p">:</span> <span class="mf">7.69</span><span class="p">,</span> <span class="s">'performance'</span><span class="p">:</span> <span class="mi">850</span><span class="p">},</span>     <span class="c1"># A10G, ResNet-50
+</span>    <span class="s">'g4dn.12xlarge'</span><span class="p">:</span> <span class="p">{</span><span class="s">'cost'</span><span class="p">:</span> <span class="mf">3.91</span><span class="p">,</span> <span class="s">'performance'</span><span class="p">:</span> <span class="mi">420</span><span class="p">},</span>   <span class="c1"># T4, ResNet-50
+</span>    <span class="s">'p3.16xlarge'</span><span class="p">:</span> <span class="p">{</span><span class="s">'cost'</span><span class="p">:</span> <span class="mf">24.48</span><span class="p">,</span> <span class="s">'performance'</span><span class="p">:</span> <span class="mi">1100</span><span class="p">}</span>    <span class="c1"># V100, ResNet-50
+</span><span class="p">}</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Cost per Image/Second (ResNet-50 Training):"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">instance</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">instances</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">cpp</span> <span class="o">=</span> <span class="n">calculate_cost_performance</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">'cost'</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s">'performance'</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">instance</span><span class="si">}</span><span class="s">: $</span><span class="si">{</span><span class="n">cpp</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>NVIDIA GPUs in AWS EC2 provide a comprehensive range of options for CUDA programming and GPU-accelerated computing. From the cutting-edge A100 with its massive memory bandwidth and 3rd generation Tensor Cores to the cost-effective T4 for inference workloads, each architecture offers unique advantages:</p>
+
+<ul>
+  <li><strong>A100 (P4d)</strong>: Ultimate performance for large-scale training and HPC</li>
+  <li><strong>A10G (G5)</strong>: Balanced compute and graphics with RT Cores</li>
+  <li><strong>T4 (G4dn)</strong>: Cost-effective inference and development</li>
+  <li><strong>V100 (P3)</strong>: Proven performance for established workflows</li>
+</ul>
+
+<p>When selecting an instance type, consider:</p>
+<ol>
+  <li><strong>Memory requirements</strong>: HBM vs GDDR6 trade-offs</li>
+  <li><strong>Compute capability</strong>: Feature requirements for your CUDA code</li>
+  <li><strong>Tensor Core generation</strong>: AI workload performance implications</li>
+  <li><strong>Cost-performance ratio</strong>: Budget vs performance requirements</li>
+  <li><strong>Scaling needs</strong>: Single GPU vs multi-GPU considerations</li>
+</ol>
+
+<p>The rapid evolution of NVIDIA architectures continues to push the boundaries of GPU computing, making AWS EC2 an ideal platform for accessing the latest GPU technologies without large capital investments.</p>
+
+<h2 id="additional-resources">Additional Resources</h2>
+
+<ul>
+  <li><a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/">NVIDIA CUDA Programming Guide</a></li>
+  <li><a href="https://aws.amazon.com/ec2/instance-types/">AWS EC2 Instance Types Documentation</a></li>
+  <li><a href="https://developer.nvidia.com/">NVIDIA Developer Documentation</a></li>
+  <li><a href="https://github.com/NVIDIA/cuda-samples">CUDA Samples and Best Practices</a></li>
+  <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/accelerated-computing-instances.html">AWS GPU Optimization Guide</a></li>
+</ul>
+
+<hr />
+
+<p><em>This comprehensive guide provides technical specifications and programming insights for NVIDIA GPUs available in AWS EC2. For the latest pricing and availability, consult the official AWS documentation.</em></p>]]></content><author><name>Technical Team</name></author><category term="cuda" /><category term="aws" /><category term="gpu-computing" /><category term="cloud" /><category term="nvidia" /><category term="ec2" /><category term="tensor-cores" /><category term="compute-capability" /><category term="memory-bandwidth" /><summary type="html"><![CDATA[Comprehensive analysis of NVIDIA GPU architectures available in AWS EC2 instances, including compute capabilities, memory bandwidth, and FP16/FP8 performance specifications.]]></summary></entry></feed>

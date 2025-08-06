@@ -5,3 +5,9 @@ url: "https://luongthecong123.github.io"
 
 markdown: kramdown
 theme: minima
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
