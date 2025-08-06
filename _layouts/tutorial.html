@@ -1,0 +1,125 @@
+---
+layout: default
+---
+
+<article class="tutorial h-entry" itemscope itemtype="http://schema.org/TechArticle">
+
+  <header class="tutorial-header">
+    <h1 class="tutorial-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="tutorial-meta">
+      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+        {{ page.date | date: date_format }}
+      </time>
+      {%- if page.difficulty -%}
+        • <span class="difficulty {{ page.difficulty | downcase }}">{{ page.difficulty }}</span>
+      {%- endif -%}
+      {%- if page.duration -%}
+        • <span class="duration">{{ page.duration }}</span>
+      {%- endif -%}
+    </p>
+  </header>
+
+  {%- if page.prerequisites -%}
+  <div class="prerequisites">
+    <h3>Prerequisites</h3>
+    <ul>
+      {%- for prerequisite in page.prerequisites -%}
+        <li>{{ prerequisite }}</li>
+      {%- endfor -%}
+    </ul>
+  </div>
+  {%- endif -%}
+
+  <div class="tutorial-content e-content" itemprop="articleBody">
+    {{ content }}
+  </div>
+
+  <div class="tutorial-navigation">
+    {%- assign tutorials = site.tutorials | sort: 'order' -%}
+    {%- for tutorial in tutorials -%}
+      {%- if tutorial.url == page.url -%}
+        {%- assign current_index = forloop.index0 -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    
+    {%- if current_index > 0 -%}
+      {%- assign prev_index = current_index | minus: 1 -%}
+      {%- assign prev_tutorial = tutorials[prev_index] -%}
+      <a class="prev-tutorial" href="{{ prev_tutorial.url | relative_url }}">&larr; {{ prev_tutorial.title }}</a>
+    {%- endif -%}
+    
+    {%- assign next_index = current_index | plus: 1 -%}
+    {%- if next_index < tutorials.size -%}
+      {%- assign next_tutorial = tutorials[next_index] -%}
+      <a class="next-tutorial" href="{{ next_tutorial.url | relative_url }}">{{ next_tutorial.title }} &rarr;</a>
+    {%- endif -%}
+  </div>
+
+  <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
+</article>
+
+<style>
+.tutorial-header {
+  margin-bottom: 2rem;
+}
+
+.difficulty {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.difficulty.beginner {
+  background-color: #e8f5e8;
+  color: #2e7d2e;
+}
+
+.difficulty.intermediate {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.difficulty.advanced {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.duration {
+  font-style: italic;
+  color: #666;
+}
+
+.prerequisites {
+  background-color: #f8f9fa;
+  border-left: 4px solid #007bff;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.prerequisites h3 {
+  margin-top: 0;
+  color: #007bff;
+}
+
+.tutorial-navigation {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  justify-content: space-between;
+}
+
+.prev-tutorial, .next-tutorial {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.prev-tutorial:hover, .next-tutorial:hover {
+  text-decoration: underline;
+}
+</style>

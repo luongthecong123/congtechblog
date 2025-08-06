@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-08-06T15:59:12+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">CUDA Programming Guide</title><subtitle>A comprehensive technical blog covering CUDA programming, GPU computing, and parallel programming techniques</subtitle><author><name>Your Name</name></author><entry><title type="html">CUDA Memory Management: A Deep Dive</title><link href="http://localhost:4000/2025/01/20/cuda-memory-management.html" rel="alternate" type="text/html" title="CUDA Memory Management: A Deep Dive" /><published>2025-01-20T00:00:00+00:00</published><updated>2025-01-20T00:00:00+00:00</updated><id>http://localhost:4000/2025/01/20/cuda-memory-management</id><content type="html" xml:base="http://localhost:4000/2025/01/20/cuda-memory-management.html"><![CDATA[<h1 id="cuda-memory-management-a-deep-dive">CUDA Memory Management: A Deep Dive</h1>
+
+<p>Effective memory management is crucial for achieving optimal performance in CUDA applications. Understanding the different types of memory and their characteristics will help you write efficient GPU code.</p>
+
+<h2 id="memory-types-in-cuda">Memory Types in CUDA</h2>
+
+<h3 id="1-global-memory">1. Global Memory</h3>
+<ul>
+  <li><strong>Size</strong>: Largest memory space (several GBs)</li>
+  <li><strong>Access</strong>: All threads can access</li>
+  <li><strong>Latency</strong>: Highest latency (400-800 cycles)</li>
+  <li><strong>Bandwidth</strong>: High bandwidth when accessed correctly</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c1">// Allocate global memory</span>
+<span class="kt">float</span> <span class="o">*</span><span class="n">d_data</span><span class="p">;</span>
+<span class="n">cudaMalloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">d_data</span><span class="p">,</span> <span class="n">size</span> <span class="o">*</span> <span class="nf">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+
+<span class="c1">// Copy data to device</span>
+<span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">d_data</span><span class="p">,</span> <span class="n">h_data</span><span class="p">,</span> <span class="n">size</span> <span class="o">*</span> <span class="nf">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="2-shared-memory">2. Shared Memory</h3>
+<ul>
+  <li><strong>Size</strong>: Limited per block (48KB-163KB depending on GPU)</li>
+  <li><strong>Access</strong>: Threads within the same block</li>
+  <li><strong>Latency</strong>: Very low latency (1-2 cycles)</li>
+  <li><strong>Use case</strong>: Data sharing and cache optimization</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="n">__global__</span> <span class="kt">void</span> <span class="nf">sharedMemoryExample</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">__shared__</span> <span class="kt">float</span> <span class="n">shared_data</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    
+    <span class="c1">// Use shared memory for temporary storage</span>
+    <span class="n">shared_data</span><span class="p">[</span><span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="cm">/* some value */</span><span class="p">;</span>
+    <span class="n">__syncthreads</span><span class="p">();</span> <span class="c1">// Synchronize threads in block</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="3-constant-memory">3. Constant Memory</h3>
+<ul>
+  <li><strong>Size</strong>: 64KB</li>
+  <li><strong>Access</strong>: Read-only for kernels</li>
+  <li><strong>Cached</strong>: Cached for efficient access</li>
+  <li><strong>Use case</strong>: Constants used by all threads</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">__constant__</span> <span class="kt">float</span> <span class="n">const_data</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+
+<span class="c1">// Copy to constant memory</span>
+<span class="n">cudaMemcpyToSymbol</span><span class="p">(</span><span class="n">const_data</span><span class="p">,</span> <span class="n">h_data</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="memory-access-patterns">Memory Access Patterns</h2>
+
+<h3 id="coalesced-access">Coalesced Access</h3>
+<p>For optimal performance, threads should access consecutive memory locations:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="c1">// Good: Coalesced access</span>
+<span class="n">__global__</span> <span class="kt">void</span> <span class="nf">coalescedAccess</span><span class="p">(</span><span class="kt">float</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">;</span> <span class="c1">// Each thread accesses consecutive elements</span>
+<span class="p">}</span>
+
+<span class="c1">// Bad: Non-coalesced access</span>
+<span class="n">__global__</span> <span class="kt">void</span> <span class="n">nonCoalescedAccess</span><span class="p">(</span><span class="kt">float</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">idx</span> <span class="o">*</span> <span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">;</span> <span class="c1">// Threads access strided elements</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="memory-management-best-practices">Memory Management Best Practices</h2>
+
+<h3 id="1-minimize-host-device-transfers">1. Minimize Host-Device Transfers</h3>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c1">// Instead of multiple small transfers</span>
+<span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">d_data1</span><span class="p">,</span> <span class="n">h_data1</span><span class="p">,</span> <span class="n">size1</span><span class="p">,</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
+<span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">d_data2</span><span class="p">,</span> <span class="n">h_data2</span><span class="p">,</span> <span class="n">size2</span><span class="p">,</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
+
+<span class="c1">// Use one large transfer</span>
+<span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">d_data</span><span class="p">,</span> <span class="n">h_data</span><span class="p">,</span> <span class="n">total_size</span><span class="p">,</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="2-use-pinned-memory-for-faster-transfers">2. Use Pinned Memory for Faster Transfers</h3>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c1">// Allocate pinned (page-locked) memory</span>
+<span class="kt">float</span> <span class="o">*</span><span class="n">h_pinned_data</span><span class="p">;</span>
+<span class="n">cudaMallocHost</span><span class="p">(</span><span class="o">&amp;</span><span class="n">h_pinned_data</span><span class="p">,</span> <span class="n">size</span> <span class="o">*</span> <span class="nf">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+
+<span class="c1">// Faster transfer compared to pageable memory</span>
+<span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">d_data</span><span class="p">,</span> <span class="n">h_pinned_data</span><span class="p">,</span> <span class="n">size</span> <span class="o">*</span> <span class="nf">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="3-utilize-texture-memory-for-read-only-data">3. Utilize Texture Memory for Read-Only Data</h3>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="n">texture</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cudaReadModeElementType</span><span class="o">&gt;</span> <span class="n">tex_ref</span><span class="p">;</span>
+
+<span class="n">__global__</span> <span class="kt">void</span> <span class="nf">textureExample</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">value</span> <span class="o">=</span> <span class="n">tex1Dfetch</span><span class="p">(</span><span class="n">tex_ref</span><span class="p">,</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+    <span class="c1">// Use the cached texture value</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="memory-debugging-tools">Memory Debugging Tools</h2>
+
+<h3 id="1-cuda-memcheck">1. CUDA-MEMCHECK</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>cuda-memcheck ./your_program
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="2-nsight-compute">2. Nsight Compute</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>ncu <span class="nt">--set</span> full ./your_program
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="performance-tips">Performance Tips</h2>
+
+<ol>
+  <li><strong>Align memory accesses</strong> to 128-byte boundaries</li>
+  <li><strong>Use shared memory</strong> to reduce global memory accesses</li>
+  <li><strong>Avoid bank conflicts</strong> in shared memory</li>
+  <li><strong>Overlap computation with memory transfers</strong> using streams</li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Mastering CUDA memory management is essential for writing high-performance GPU applications. Understanding the memory hierarchy and access patterns will help you optimize your code for maximum throughput.</p>
+
+<p>In the next post, we’ll explore advanced kernel optimization techniques!</p>
+
+<hr />
+
+<p><em>Want to practice? Try implementing a matrix multiplication using shared memory optimization.</em></p>]]></content><author><name>Your Name</name></author><category term="CUDA" /><category term="Memory" /><category term="Performance" /><category term="Advanced" /><summary type="html"><![CDATA[CUDA Memory Management: A Deep Dive]]></summary></entry><entry><title type="html">Getting Started with CUDA Programming</title><link href="http://localhost:4000/2025/01/15/getting-started-with-cuda.html" rel="alternate" type="text/html" title="Getting Started with CUDA Programming" /><published>2025-01-15T00:00:00+00:00</published><updated>2025-01-15T00:00:00+00:00</updated><id>http://localhost:4000/2025/01/15/getting-started-with-cuda</id><content type="html" xml:base="http://localhost:4000/2025/01/15/getting-started-with-cuda.html"><![CDATA[<h1 id="getting-started-with-cuda-programming">Getting Started with CUDA Programming</h1>
+
+<p>CUDA (Compute Unified Device Architecture) is NVIDIA’s parallel computing platform and application programming interface (API) that allows developers to harness the power of NVIDIA GPUs for general-purpose computing.</p>
+
+<h2 id="what-is-cuda">What is CUDA?</h2>
+
+<p>CUDA enables dramatic increases in computing performance by harnessing the power of the graphics processing unit (GPU). With millions of cores available in modern GPUs, CUDA allows you to accelerate compute-intensive applications.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before diving into CUDA programming, you’ll need:</p>
+
+<ul>
+  <li>An NVIDIA GPU with CUDA Compute Capability 3.0 or higher</li>
+  <li>CUDA Toolkit installed on your system</li>
+  <li>A compatible C/C++ compiler</li>
+  <li>Basic knowledge of C/C++ programming</li>
+</ul>
+
+<h2 id="your-first-cuda-program">Your First CUDA Program</h2>
+
+<p>Let’s start with a simple “Hello World” program:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cuda_runtime.h&gt;</span><span class="cp">
+</span>
+<span class="n">__global__</span> <span class="kt">void</span> <span class="nf">helloKernel</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Hello from GPU thread %d!</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Launch kernel with 10 threads</span>
+    <span class="n">helloKernel</span><span class="o">&lt;&lt;&lt;</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="o">&gt;&gt;&gt;</span><span class="p">();</span>
+    
+    <span class="c1">// Wait for GPU to finish</span>
+    <span class="n">cudaDeviceSynchronize</span><span class="p">();</span>
+    
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Hello from CPU!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="key-concepts">Key Concepts</h2>
+
+<h3 id="kernels">Kernels</h3>
+<p>A kernel is a function that runs on the GPU. It’s marked with the <code class="language-plaintext highlighter-rouge">__global__</code> keyword.</p>
+
+<h3 id="thread-hierarchy">Thread Hierarchy</h3>
+<p>CUDA organizes threads into:</p>
+<ul>
+  <li><strong>Threads</strong>: Individual execution units</li>
+  <li><strong>Blocks</strong>: Groups of threads</li>
+  <li><strong>Grids</strong>: Collections of blocks</li>
+</ul>
+
+<h3 id="memory-hierarchy">Memory Hierarchy</h3>
+<p>CUDA has several memory types:</p>
+<ul>
+  <li><strong>Global Memory</strong>: Accessible by all threads</li>
+  <li><strong>Shared Memory</strong>: Shared within a block</li>
+  <li><strong>Local Memory</strong>: Private to each thread</li>
+</ul>
+
+<h2 id="compilation">Compilation</h2>
+
+<p>To compile your CUDA program:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>nvcc <span class="nt">-o</span> hello hello.cu
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>In the next post, we’ll explore CUDA memory management and learn how to efficiently transfer data between CPU and GPU.</p>
+
+<hr />
+
+<p><em>This is the first post in our CUDA programming series. Stay tuned for more advanced topics!</em></p>]]></content><author><name>Your Name</name></author><category term="CUDA" /><category term="GPU" /><category term="Beginner" /><category term="Setup" /><summary type="html"><![CDATA[Getting Started with CUDA Programming]]></summary></entry></feed>

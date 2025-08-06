@@ -1,0 +1,57 @@
+# Jekyll Configuration for CUDA Programming Guide Blog
+
+# Site settings
+title: "CUDA Programming Guide"
+description: "A comprehensive technical blog covering CUDA programming, GPU computing, and parallel programming techniques"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://yourusername.github.io" # Replace with your GitHub Pages URL
+author: "Your Name"
+email: "your.email@example.com"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Kramdown settings for code highlighting
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+
+# Collections
+collections:
+  tutorials:
+    output: true
+    permalink: /:collection/:name/
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+  - preview.html
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Your Name"
+  - scope:
+      path: ""
+      type: "tutorials"
+    values:
+      layout: "tutorial"
